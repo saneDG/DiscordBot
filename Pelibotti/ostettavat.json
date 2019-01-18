@@ -1,0 +1,32 @@
+[
+    {
+        "ID": "1", 
+        "nimi": "Jääkäri", 
+        "hinta": 5, 
+        "hyokkays": 1
+    },
+    {
+        "ID": "2", 
+        "nimi": "Jääkäri", 
+        "hinta": 50, 
+        "hyokkays": 6
+    },
+    {
+        "ID": "3", 
+        "nimi": "Masi", 
+        "hinta": 500, 
+        "hyokkays": 800
+    },
+    {
+        "ID": "4", 
+        "nimi": "Leopard 2A4", 
+        "hinta": 10000, 
+        "hyokkays": 10000
+    },
+    {
+        "ID": "5", 
+        "nimi": "Tykkimies", 
+        "hinta": 500000, 
+        "hyokkays": 0.1
+    }
+]
