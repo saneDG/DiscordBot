@@ -73,7 +73,7 @@ async def jono(ctx, url):
     await client.say('viteo jonossa')
 
 @client.command(pass_context=True)
-async def miikakertoivitsin(ctx):
+async def joke(ctx):
     channel = ctx.message.author.voice.voice_channel
     await client.join_voice_channel(channel)
     server = ctx.message.server
