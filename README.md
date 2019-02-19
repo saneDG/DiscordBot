@@ -19,6 +19,6 @@ The bot is not online quite often but you can use my code to create your own mus
 
 **PewDiePie vs T-Series**
 
-Added new feature to view battle between two most subscribed youtube channels. With command: ".pvst" you see both channels subscribes count and their subcap.
+Added new feature to view battle between two most subscribed youtube channels. With command: ".pvst" you see both channels subscriber count and their subcap.
 
 <img src="https://ag5mxw.sn.files.1drv.com/y4mwa2_FD-3Tii5LOKsFx7er4vmG9LW6lBaJlCtfkbJP3I9-toj8CLSdq7czJxxg39qLYH2wHk5vVaXsJS4T84ZhZ7LCS39ozjgaHpgA7SPa2CEtOYwP4FeYLaa3Av4ghcFmIQaIewXlJVEeQt-rDYKSYbQs-PJk4rfdWMYzXNBlHEpmXF6INv5tbfbxNfG2cRsS00pAY3aERtYz8L4tBKOSA?width=512&height=226&cropmode=none" width="512" height="226" />
