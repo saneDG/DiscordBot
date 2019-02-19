@@ -25,6 +25,38 @@ async def on_ready():
 @client.command()
 async def ping():
     await client.say('Pong!')
+    
+@client.command()
+async def pvst():
+
+    key = "AIzaSyBCqQlYK5QFDIgXu4bhqQcMtoG9_0SFaFo"
+
+    pewname = "pewdiepie"
+    tsername = "tseries"
+
+    pewdata = urllib.request.urlopen("https://www.googleapis.com/youtube/v3/channels?part=statistics&forUsername="+pewname+"&key="+key).read()
+    pewsubs = json.loads(pewdata)["items"][0]["statistics"]["subscriberCount"]
+    print(pewname + ": " + "{:,d}".format(int(pewsubs)) + " subscribers!")
+
+    tserdata = urllib.request.urlopen("https://www.googleapis.com/youtube/v3/channels?part=statistics&forUsername="+tsername+"&key="+key).read()
+    tsersubs = json.loads(tserdata)["items"][0]["statistics"]["subscriberCount"]
+    print(tsername + ": " + "{:,d}".format(int(tsersubs)) + " subscribers!")
+
+    subgap = int(pewsubs) - int(tsersubs)
+    print("Subgap is " + "{:,d}".format(int(subgap)) + " subscribers!")
+
+
+    embed = discord.Embed(
+        colour = discord.Colour.red()
+    )
+
+    embed.set_footer(text='😂😂😂')
+    embed.set_thumbnail(url='https://www.sofakenews.com/wp-content/uploads/2018/10/pewdiepie-has-questioned-the-validity-of-tseries-subscribers-560x416.jpg')
+    embed.add_field(name='PewDiePie', value=pewsubs, inline=False)
+    embed.add_field(name='T-series', value=tsersubs, inline=False)
+    embed.add_field(name='Gap between', value=subgap, inline=False)
+
+    await client.say(embed=embed)
 
 @client.command()
 async def helppiä():
