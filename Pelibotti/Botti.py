@@ -5,7 +5,7 @@ from discord.ext import commands
 import youtube_dl
 from timeit import default_timer as timer
 
-TOKEN = 'NTE4ODU5MzEyNzgxODUyNjky.DuW6jg.4sQFIuL7TQ6R6j2wrqlHAmO4vrU'
+TOKEN = 'DISCORDTOKEN'
 
 client = commands.Bot(command_prefix = '.')
 
@@ -29,7 +29,7 @@ async def ping():
 @client.command()
 async def pvst():
 
-    key = "AIzaSyBCqQlYK5QFDIgXu4bhqQcMtoG9_0SFaFo"
+    key = "GOOGLEAPIKEY"
 
     pewname = "pewdiepie"
     tsername = "tseries"
