@@ -1,13 +1,15 @@
 import discord
 import json
 import requests
+import urllib.request
 from discord.ext import commands
 import youtube_dl
 from timeit import default_timer as timer
+from config import *
 
-TOKEN = 'DISCORDTOKEN'
+TOKEN = configToken
 
-client = commands.Bot(command_prefix = '.')
+client = commands.Bot(command_prefix='.')
 
 players = {}
 queues = {}
@@ -18,18 +20,29 @@ def check_queue(id):
         players[id]
         player.start()
 
+
 @client.event
 async def on_ready():
-    print('Bot is ready.')
+    print('Logged in as')
+    print(client.user.name)
+    print(client.user.id)
+    print(discord.__version__)
+    print('------')
+
+    print('Servers connected to:')
+    for server in client.servers:
+        print(server.name)
+    print("------")
+
 
 @client.command()
 async def ping():
     await client.say('Pong!')
-    
+
 @client.command()
 async def pvst():
 
-    key = "GOOGLEAPIKEY"
+    key = configKey
 
     pewname = "pewdiepie"
     tsername = "tseries"
@@ -45,6 +58,8 @@ async def pvst():
     subgap = int(pewsubs) - int(tsersubs)
     print("Subgap is " + "{:,d}".format(int(subgap)) + " subscribers!")
 
+    print("------")
+
 
     embed = discord.Embed(
         colour = discord.Colour.red()
@@ -52,21 +67,25 @@ async def pvst():
 
     embed.set_footer(text='😂😂😂')
     embed.set_thumbnail(url='https://www.sofakenews.com/wp-content/uploads/2018/10/pewdiepie-has-questioned-the-validity-of-tseries-subscribers-560x416.jpg')
-    embed.add_field(name='PewDiePie', value=pewsubs, inline=False)
-    embed.add_field(name='T-series', value=tsersubs, inline=False)
-    embed.add_field(name='Gap between', value=subgap, inline=False)
+    embed.add_field(name='PewDiePie', value="{:,d}".format(int(pewsubs)), inline=False)
+    embed.add_field(name='T-series', value="{:,d}".format(int(tsersubs)), inline=False)
+    embed.add_field(name='Gap between', value="{:,d}".format(int(subgap)), inline=False)
 
     await client.say(embed=embed)
+
 
 @client.command()
 async def helppiä():
     await client.say('```' + '|| .tule | .soita (URL) | .heippa | .jono (URL) | .skippi ||' + '```')
 
-#Join and leave voice channel the author is currently in.
+# Join and leave voice channel the author is currently in.
+
+
 @client.command(pass_context=True)
 async def tule(ctx):
     channel = ctx.message.author.voice.voice_channel
     await client.join_voice_channel(channel)
+
 
 @client.command(pass_context=True)
 async def heippa(ctx):
@@ -74,29 +93,33 @@ async def heippa(ctx):
     voice_client = client.voice_client_in(server)
     await voice_client.disconnect()
 
+
 @client.command(pass_context=True)
 async def soita(ctx, url):
     server = ctx.message.server
     voice_client = client.voice_client_in(server)
-    player = await voice_client.create_ytdl_player(url, after = lambda: check_queue(server.id))
+    player = await voice_client.create_ytdl_player(url, after=lambda: check_queue(server.id))
     players[server.id] = player
     player.start()
+
 
 @client.command(pass_context=True)
 async def skippi(ctx):
     id = ctx.message.server.id
     players[id].stop()
 
+
 @client.command(pass_context=True)
 async def jatka(ctx):
     id = ctx.message.server.id
     players[id].resume()
 
+
 @client.command(pass_context=True)
 async def jono(ctx, url):
     server = ctx.message.server
     voice_client = client.voice_client_in(server)
-    player = await voice_client.create_ytdl_player(url, after = lambda: check_queue(server.id))
+    player = await voice_client.create_ytdl_player(url, after=lambda: check_queue(server.id))
 
     if server.id in queues:
         queues[server.id].append(player)
@@ -104,8 +127,9 @@ async def jono(ctx, url):
         queues[server.id] = [player]
     await client.say('viteo jonossa')
 
+
 @client.command(pass_context=True)
-async def joke(ctx):
+async def miikakertoivitsin(ctx):
     channel = ctx.message.author.voice.voice_channel
     await client.join_voice_channel(channel)
     server = ctx.message.server
