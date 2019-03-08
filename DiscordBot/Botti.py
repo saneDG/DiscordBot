@@ -7,7 +7,7 @@ import youtube_dl
 from timeit import default_timer as timer
 from config import *
 
-TOKEN = configToken
+TOKEN = configDiscordToken
 
 client = commands.Bot(command_prefix='.')
 
@@ -39,10 +39,81 @@ async def on_ready():
 async def ping():
     await client.say('Pong!')
 
+@client.command(pass_context=True)
+async def nextgames(ctx, amount=5):
+    if amount > 10:
+        await client.say("max 10")
+    else:
+        upcomingTournamentsData = urllib.request.urlopen("https://api.pandascore.co/csgo/matches/upcoming?&token=" + configPandaToken).read()
+        i = 0
+        while i < amount:
+            upcomingMatchLeagueImageUrl = json.loads(upcomingTournamentsData)[i]['league']['image_url']
+            upcomingMatchLeagueName = json.loads(upcomingTournamentsData)[i]['league']['name']
+            upcomingMatchTeamOpponentName1 = json.loads(upcomingTournamentsData)[i]['opponents'][0]['opponent']['name']
+            upcomingMatchTeamOpponentName2 = json.loads(upcomingTournamentsData)[i]['opponents'][1]['opponent']['name']
+            upcomingMatchNumberofgames = json.loads(upcomingTournamentsData)[i]['number_of_games']
+            upcomingMatchBeginat = json.loads(upcomingTournamentsData)[i]['serie']['begin_at']
+            upcomingMatchSlug = json.loads(upcomingTournamentsData)[i]['serie']['slug']
+            print("NEXT OPPONENTS: {} -VS- {}" .format(upcomingMatchTeamOpponentName2, upcomingMatchTeamOpponentName1))
+            print("ALL: {} - {} - {}" .format(upcomingMatchLeagueImageUrl, upcomingMatchBeginat, upcomingMatchSlug))
+            i += 1
+
+            embed = discord.Embed(
+                type = 'rich',
+                title = upcomingMatchLeagueName,
+                colour = discord.Colour.red()
+            )
+
+            embed.set_footer(text='Botti')
+            embed.set_thumbnail(url=upcomingMatchLeagueImageUrl)
+            embed.add_field(name='Teams', value=upcomingMatchTeamOpponentName1 + ' -VS- ' + upcomingMatchTeamOpponentName2, inline=False)
+            embed.add_field(name='Begin at', value=upcomingMatchBeginat, inline=False)
+            embed.add_field(name='Game type', value='Best of {}' .format(upcomingMatchNumberofgames), inline=False)
+
+            await client.say(embed=embed)
+    
+    print("ready")
+
+@client.command()
+async def ence():
+
+    teamsData = urllib.request.urlopen("https://api.pandascore.co/csgo/teams?filter[slug]=ence&token=" + configPandaToken).read()
+    teamsEnceName = json.loads(teamsData)[0]['name']
+
+    print("----------------------------" + teamsEnceName + "----------------------------")
+    i = 0
+    while i < 5:
+        teamsEncePlayer = json.loads(teamsData)[0]['players'][i]['name']
+        teamsEnceLastname = json.loads(teamsData)[0]['players'][i]['last_name']
+        teamsEnceImageurl = json.loads(teamsData)[0]['players'][i]['image_url']
+        teamsEnceHometown = json.loads(teamsData)[0]['players'][i]['hometown']
+        print(teamsEncePlayer)
+        print(teamsEnceLastname)
+        print(teamsEnceImageurl)
+        print(teamsEnceHometown)
+        print("------------------")
+        i += 1
+
+        embed = discord.Embed(
+            title = 'Player card',
+            colour = discord.Colour.red()
+        )
+
+        embed.set_footer(text='Botti')
+        embed.set_image(url=teamsEnceImageurl)
+        embed.add_field(name='Name', value=teamsEncePlayer, inline=False)
+        embed.add_field(name='Last name', value=teamsEnceLastname, inline=False)
+        embed.add_field(name='Hometown', value=teamsEnceHometown, inline=False)
+
+        await client.say(embed=embed)
+
+    print("----------------------------" + teamsEnceName + "----------------------------")
+
+
 @client.command()
 async def pvst():
 
-    key = configKey
+    key = configYoutubeKey
 
     pewname = "pewdiepie"
     tsername = "tseries"
